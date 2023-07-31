@@ -2,6 +2,12 @@ import { IBookStatus } from './books.interface'
 
 export const bookStatus: IBookStatus[] = ['N/A', 'Reading', 'Finished']
 
-export const bookSearchableField = ['title', 'author', 'genre']
+export const bookSearchableFields = ['title', 'author', 'genre']
 
-export const academicSemesterFilterableField = ['genre', 'publicationYear']
+export const booksFilterableFields = [
+  'searchTerm',
+  'title',
+  'author',
+  'genre',
+  'publicationYear',
+]

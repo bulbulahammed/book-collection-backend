@@ -19,6 +19,6 @@ export type IBook = {
 
 export type BookModel = Model<IBook, Record<string, unknown>>
 
-export type IBookSearchFilters = {
+export type IBookFilters = {
   searchTerm?: string
 }
