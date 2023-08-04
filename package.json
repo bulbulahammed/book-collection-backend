@@ -1,5 +1,5 @@
 {
-  "name": "lit-books-backend",
+  "name": "book-collection-backend",
   "version": "1.0.0",
   "description": "",
   "main": "/src/server.ts",
