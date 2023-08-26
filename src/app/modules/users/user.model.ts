@@ -3,14 +3,13 @@ import { IUser, UserModel } from './user.interface'
 
 const userSchema = new Schema<IUser>(
   {
-    name: {
-      firstName: {
-        type: String,
-      },
-      lastName: {
-        type: String,
-      },
+    firstName: {
+      type: String,
     },
+    lastName: {
+      type: String,
+    },
+
     email: {
       type: String,
       required: true,
