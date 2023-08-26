@@ -8,6 +8,7 @@ import { UserService } from './user.service'
 const signUp: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { user } = req.body
+    console.log(user)
     const result = await UserService.signUp(user)
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -22,6 +23,7 @@ const signUp: RequestHandler = catchAsync(
 const login: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { user } = req.body
+    console.log(user)
     const result = await UserService.login(user)
     sendResponse(res, {
       statusCode: httpStatus.OK,

@@ -11,10 +11,8 @@ type IBooksList = {
 }
 
 export type IUser = {
-  name?: {
-    firstName: string
-    lastName: string
-  }
+  firstName?: string
+  lastName?: string
   email: string
   password: string
   booksList?: IBooksList
