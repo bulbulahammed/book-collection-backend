@@ -23,10 +23,12 @@ const signUp = async (user: IUser): Promise<IUser | null> => {
 }
 
 // Login Service
+
 type LoginResult = {
   user: IUser
   token: string
 }
+
 const login = async (user: IUser): Promise<LoginResult | null> => {
   try {
     // Find the user by their email
@@ -34,12 +36,15 @@ const login = async (user: IUser): Promise<LoginResult | null> => {
       email: user.email,
     })
 
-    // If the user is not found, or if the password is incorrect, return null
     if (
       !loggedInUser ||
       !(await bcrypt.compare(user.password, loggedInUser.password))
     ) {
-      throw new ApiError(400, 'Failed to Login')
+      if (!loggedInUser) {
+        throw new ApiError(404, 'User Not Found !')
+      } else {
+        throw new ApiError(400, 'Incorrect Password !')
+      }
     }
 
     // Generate a JWT token for the user
@@ -48,6 +53,9 @@ const login = async (user: IUser): Promise<LoginResult | null> => {
     // Return the JWT token
     return { token, user: loggedInUser }
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
     throw new ApiError(400, 'Failed to Login')
   }
 }
