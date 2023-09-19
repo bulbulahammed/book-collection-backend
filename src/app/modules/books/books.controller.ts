@@ -11,14 +11,25 @@ import booksService from './books.service'
 // Create Book Controller
 const createBook: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { book } = req.body
-    const result = await booksService.createBook(book)
-    sendResponse<IBook>(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Book Created Successfully!',
-      data: result,
-    })
+    try {
+      const { book } = req.body
+      const result = await booksService.createBook(book)
+
+      sendResponse<IBook>(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Book Created Successfully!',
+        data: result,
+      })
+    } catch (error) {
+      // Handle the error and send an error response to the frontend
+      sendResponse<IBook>(res, {
+        statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'An error occurred while creating the book.',
+        error: (error as Error).message as string, // Cast error to Error, then access message
+      })
+    }
   },
 )
 

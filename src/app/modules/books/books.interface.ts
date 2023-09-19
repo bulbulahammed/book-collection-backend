@@ -12,9 +12,10 @@ export type IBook = {
   genre: string
   publicationYear: string
   img: string
-  user?: string
+  addedBy?: string
   status: IBookStatus
   reviews?: IBookReviews
+  description: string
 }
 
 export type BookModel = Model<IBook, Record<string, unknown>>
