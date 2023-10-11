@@ -5,6 +5,7 @@ import ApiError from '../../../errors/apiError'
 import { paginationHelpers } from '../../../helpers/paginationHelpers'
 import { IGenericResponse } from '../../../interfaces/common'
 import { IPaginationOptions } from '../../../interfaces/pagination'
+import { bookSearchableFields } from './books.constant'
 import { IBook, IBookFilters } from './books.interface'
 import { Book } from './books.model'
 
@@ -31,11 +32,23 @@ const getAllBooks = async (
   // Define the `whereConditions` variable
   const whereConditions: any = {}
 
+  // Create an empty array to store the `$and` conditions
+  const andConditions = []
+
+  // Search
+  if (searchTerm) {
+    andConditions.push({
+      $or: bookSearchableFields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+
   // Filter
   if (Object.keys(filtersData).length) {
-    // Create an empty array to store the `$and` conditions
-    const andConditions = []
-
     // Loop through the filter data and add each condition to the array
     for (const [field, value] of Object.entries(filtersData)) {
       // If the value is not an empty string, add the condition to the array
@@ -43,11 +56,11 @@ const getAllBooks = async (
         andConditions.push({ [field]: value })
       }
     }
+  }
 
-    // If there are any conditions in the array, add them to the where clause
-    if (andConditions.length > 0) {
-      whereConditions.$and = andConditions
-    }
+  // If there are any conditions in the array, add them to the where clause
+  if (andConditions.length > 0) {
+    whereConditions.$and = andConditions
   }
 
   const sortCondition: { [key: string]: SortOrder } = {}
