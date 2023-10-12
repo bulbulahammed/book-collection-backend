@@ -1,9 +1,12 @@
 import { Model } from 'mongoose'
 
 export type IBookStatus = 'N/A' | 'Reading' | 'Finished'
+export type IBookRating = '1' | '2' | '3' | '4' | '5'
 
-export type IBookReviews = {
-  review: string[]
+export type IBookReview = {
+  rating: IBookRating
+  comment: string
+  reviewer: string
 }
 
 export type IBook = {
@@ -14,11 +17,11 @@ export type IBook = {
   img: string
   addedBy?: string
   status: IBookStatus
-  reviews?: IBookReviews
+  reviews?: IBookReview[]
   description: string
 }
 
-export type BookModel = Model<IBook, Record<string, unknown>>
+export type BookModel = Model<IBook>
 
 export type IBookFilters = {
   searchTerm?: string
