@@ -1,10 +1,8 @@
 import { Model } from 'mongoose'
 
 export type IBookStatus = 'N/A' | 'Reading' | 'Finished'
-export type IBookRating = '1' | '2' | '3' | '4' | '5'
 
 export type IBookReview = {
-  rating: IBookRating
   comment: string
   reviewer: string
 }

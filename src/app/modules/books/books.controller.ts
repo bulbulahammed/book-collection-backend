@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, RequestHandler, Response } from 'express'
 import httpStatus from 'http-status'
 import { paginationFields } from '../../../constants/paginationFields'
