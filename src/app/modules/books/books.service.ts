@@ -19,7 +19,6 @@ const createBook = async (book: IBook): Promise<IBook | null> => {
 }
 
 // Get all books
-
 const getAllBooks = async (
   filters: IBookFilters,
   paginationOptions: IPaginationOptions,
@@ -106,6 +105,7 @@ const deleteBook = async (id: string): Promise<IBook | null> => {
   const result = await Book.findByIdAndDelete(id)
   return result
 }
+
 export default {
   createBook,
   getAllBooks,

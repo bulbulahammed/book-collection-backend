@@ -1,24 +1,6 @@
 import { Schema, model } from 'mongoose'
-import { bookRating, bookStatus } from './books.constant'
+import { bookStatus } from './books.constant'
 import { BookModel, IBook } from './books.interface'
-
-const reviewSchema = new Schema(
-  {
-    rating: {
-      type: String,
-      enum: bookRating,
-    },
-    comment: {
-      type: String,
-    },
-    reviewer: {
-      type: String,
-    },
-  },
-  {
-    timestamps: true,
-  },
-)
 
 const bookSchema = new Schema<IBook>(
   {
@@ -44,7 +26,6 @@ const bookSchema = new Schema<IBook>(
     },
     addedBy: {
       type: String,
-      ref: 'addedBy',
     },
     status: {
       type: String,
@@ -54,7 +35,16 @@ const bookSchema = new Schema<IBook>(
       type: String,
       required: true,
     },
-    reviews: [reviewSchema],
+    reviews: [
+      {
+        comment: {
+          type: String,
+        },
+        reviewer: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
