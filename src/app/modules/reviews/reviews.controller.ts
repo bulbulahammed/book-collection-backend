@@ -19,6 +19,29 @@ const addReview = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+// Delete Review Controller
+const deleteReview = catchAsync(async (req: Request, res: Response) => {
+  const bookId = req.params.bookId
+  const reviewId = req.params.reviewId
+  const result = await reviewsService.deleteReview(bookId, reviewId)
+
+  if (result) {
+    sendResponse<IBook>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Review Deleted Successfully!',
+      data: result,
+    })
+  } else {
+    sendResponse<IBook>(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: 'Review not found',
+    })
+  }
+})
+
 export const ReviewController = {
   addReview,
+  deleteReview,
 }
