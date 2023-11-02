@@ -5,5 +5,6 @@ const router = express.Router()
 
 // Add Review Route
 router.patch('/:id', ReviewController.addReview)
+router.delete('/:bookId/review/:reviewId', ReviewController.deleteReview)
 
 export const ReviewRoutes = router
