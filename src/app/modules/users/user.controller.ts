@@ -4,7 +4,7 @@ import catchAsync from '../../../shared/catchAsync'
 import sendResponse from '../../../shared/sendResponse'
 import { UserService } from './user.service'
 
-// Sign/Register up controller
+// Sign UP/Register controller
 const signUp: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { user } = req.body
@@ -32,7 +32,51 @@ const login: RequestHandler = catchAsync(
   },
 )
 
+// Get All users
+const getAllUsers: RequestHandler = catchAsync(
+  async (_req: Request, res: Response) => {
+    const users = await UserService.getAllUsers()
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Users retrieved successfully!',
+      data: users,
+    })
+  },
+)
+
+// Get Single User by ID controller
+const getUserById: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params
+    const user = await UserService.getUserById(id)
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'User retrieved successfully!',
+      data: user,
+    })
+  },
+)
+
+// Add To Wish List
+const addToWishList: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { userId, bookId } = req.params
+    const result = await UserService.addToWishList(userId, bookId)
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Book added to wishList successfully!',
+      data: result,
+    })
+  },
+)
+
 export const UserController = {
   signUp,
   login,
+  addToWishList,
+  getAllUsers,
+  getUserById,
 }

@@ -19,17 +19,14 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    booksList: {
-      type: Schema.Types.ObjectId,
-      ref: 'Books',
-    },
     readingList: {
-      type: Schema.Types.ObjectId,
-      ref: 'ReadingList',
+      bookId: [{ type: String }],
     },
     wishList: {
-      type: Schema.Types.ObjectId,
-      ref: 'WishList',
+      bookId: [{ type: String }],
+    },
+    readList: {
+      bookId: [{ type: String }],
     },
   },
   {

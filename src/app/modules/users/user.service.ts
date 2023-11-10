@@ -73,7 +73,82 @@ const login = async (user: IUser): Promise<LoginResult | null> => {
   }
 }
 
+// Get All Users
+
+const getAllUsers = async (): Promise<IUser[] | null> => {
+  try {
+    const users = await User.find()
+    return users
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(400, 'Failed to fetch users')
+  }
+}
+
+// Get Single user By Id
+const getUserById = async (id: string): Promise<IUser | null> => {
+  try {
+    const user = await User.findById(id)
+    if (!user) {
+      throw new ApiError(404, 'User not found')
+    }
+    return user
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(400, 'Failed to fetch user by ID')
+  }
+}
+
+// Add To Wish List
+const addToWishList = async (
+  userId: string,
+  bookId: string,
+): Promise<IUser | null> => {
+  try {
+    const user = await User.findById(userId)
+    if (!user) {
+      throw new ApiError(404, 'User not found')
+    }
+
+    // Remove the book from readingList and readList if it exists
+    if (user.readingList && user.readingList.bookId) {
+      user.readingList.bookId = user.readingList.bookId.filter(
+        (id: string) => id !== bookId,
+      )
+    }
+    if (user.readList && user.readList.bookId) {
+      user.readList.bookId = user.readList.bookId.filter(
+        (id: string) => id !== bookId,
+      )
+    }
+
+    // Add the book to wishList if not already present
+    if (
+      user.wishList &&
+      user.wishList.bookId &&
+      !user.wishList.bookId.includes(bookId)
+    ) {
+      user.wishList.bookId.push(bookId)
+    }
+
+    // Save and return the updated user
+    return await user.save()
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(400, 'Failed To Add')
+  }
+}
+
 export const UserService = {
   signUp,
   login,
+  addToWishList,
+  getAllUsers,
+  getUserById,
 }

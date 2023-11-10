@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose'
-import { bookStatus } from './books.constant'
 import { BookModel, IBook } from './books.interface'
 
 const bookSchema = new Schema<IBook>(
@@ -26,10 +25,6 @@ const bookSchema = new Schema<IBook>(
     },
     addedBy: {
       type: String,
-    },
-    status: {
-      type: String,
-      enum: bookStatus,
     },
     description: {
       type: String,
