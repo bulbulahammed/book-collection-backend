@@ -145,10 +145,53 @@ const addToWishList = async (
   }
 }
 
+// Add To Reading List
+const addToReadingList = async (
+  userId: string,
+  bookId: string,
+): Promise<IUser | null> => {
+  try {
+    const user = await User.findById(userId)
+    if (!user) {
+      throw new ApiError(404, 'User not found')
+    }
+
+    // Remove the book from wishList and readList if it exists
+    if (user.wishList && user.wishList.bookId) {
+      user.wishList.bookId = user.wishList.bookId.filter(
+        (id: string) => id !== bookId,
+      )
+    }
+    if (user.readList && user.readList.bookId) {
+      user.readList.bookId = user.readList.bookId.filter(
+        (id: string) => id !== bookId,
+      )
+    }
+
+    // Add the book to Reading if not already present
+    if (
+      user.readingList &&
+      user.readingList.bookId &&
+      !user.readingList.bookId.includes(bookId)
+    ) {
+      user.readingList.bookId.push(bookId)
+    }
+
+    // Save and return the updated user
+    return await user.save()
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(400, 'Failed To Add')
+  }
+}
+
 export const UserService = {
   signUp,
   login,
   addToWishList,
+  addToReadingList,
   getAllUsers,
   getUserById,
 }

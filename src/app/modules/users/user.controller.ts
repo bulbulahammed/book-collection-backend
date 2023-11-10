@@ -73,10 +73,25 @@ const addToWishList: RequestHandler = catchAsync(
   },
 )
 
+// Add To Reading List
+const addToReadingList: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { userId, bookId } = req.params
+    const result = await UserService.addToReadingList(userId, bookId)
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Book added to Reading List successfully!',
+      data: result,
+    })
+  },
+)
+
 export const UserController = {
   signUp,
   login,
   addToWishList,
+  addToReadingList,
   getAllUsers,
   getUserById,
 }
