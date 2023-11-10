@@ -1,13 +1,15 @@
 import { Model } from 'mongoose'
 
-type IReadingList = {
-  bookIds: string[]
+export type IReadingList = {
+  bookId: string[]
 }
-type IWishList = {
-  bookIds: string[]
+
+export type IWishList = {
+  bookId: string[]
 }
-type IBooksList = {
-  bookIds: string[]
+
+export type IReadList = {
+  bookId: string[]
 }
 
 export type IUser = {
@@ -15,9 +17,9 @@ export type IUser = {
   lastName?: string
   email: string
   password: string
-  booksList?: IBooksList
   readingList?: IReadingList
   wishList?: IWishList
+  readList?: IReadList
 }
 
 export type UserModel = Model<IUser, Record<string, unknown>>
