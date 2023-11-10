@@ -20,7 +20,7 @@ router.patch('/wishList/:userId/:bookId', UserController.addToWishList)
 // Users Reading List
 router.patch('/readingList/:userId/:bookId', UserController.addToReadingList)
 
-// // Users Read List
-// router.patch('/readList/:userId/:bookId', UserController.addToReadList);
+// Users Read List
+router.patch('/readList/:userId/:bookId', UserController.addToReadList)
 
 export const UserRoutes = router
