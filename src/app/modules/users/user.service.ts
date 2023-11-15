@@ -44,11 +44,9 @@ type LoginResult = {
 
 const login = async (user: IUser): Promise<LoginResult | null> => {
   try {
-    // Find the user by their email
     const loggedInUser = await User.findOne({
       email: user.email,
     })
-
     if (
       !loggedInUser ||
       !(await bcrypt.compare(user.password, loggedInUser.password))
@@ -59,10 +57,8 @@ const login = async (user: IUser): Promise<LoginResult | null> => {
         throw new ApiError(400, 'Incorrect Password !')
       }
     }
-
     // Generate a JWT token for the user
     const token = generateToken(loggedInUser.id)
-
     // Return the JWT token
     return { token, user: loggedInUser }
   } catch (error) {
@@ -113,7 +109,6 @@ const addToWishList = async (
     if (!user) {
       throw new ApiError(404, 'User not found')
     }
-
     // Remove the book from readingList and readList if it exists
     if (user.readingList && user.readingList.bookId) {
       user.readingList.bookId = user.readingList.bookId.filter(
@@ -125,7 +120,6 @@ const addToWishList = async (
         (id: string) => id !== bookId,
       )
     }
-
     // Add the book to wishList if not already present
     if (
       user.wishList &&
@@ -134,7 +128,6 @@ const addToWishList = async (
     ) {
       user.wishList.bookId.push(bookId)
     }
-
     // Save and return the updated user
     return await user.save()
   } catch (error) {
