@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/', routes)
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('✔✌Lit-books Server running........')
+  res.send('✔✌ Book Collection Server Running 🏃🏻........')
 })
 
 // Handle  Route Not Found
