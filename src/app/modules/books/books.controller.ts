@@ -15,7 +15,6 @@ const createBook: RequestHandler = catchAsync(
     try {
       const { book } = req.body
       const result = await booksService.createBook(book)
-
       sendResponse<IBook>(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -23,12 +22,11 @@ const createBook: RequestHandler = catchAsync(
         data: result,
       })
     } catch (error) {
-      // Handle the error and send an error response to the frontend
       sendResponse<IBook>(res, {
         statusCode: httpStatus.INTERNAL_SERVER_ERROR,
         success: false,
         message: 'An error occurred while creating the book.',
-        error: (error as Error).message as string, // Cast error to Error, then access message
+        error: (error as Error).message as string,
       })
     }
   },
